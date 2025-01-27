@@ -1,6 +1,6 @@
 class Account{
-    private final String name;
-    private final int accountNumber;
+    private String name;
+    private int accountNumber;
     private int accountBalance;
     public Account(String currentName,int currentAccountNumber){
         this.name = currentName;
@@ -24,6 +24,22 @@ class Account{
         System.out.println("Account Holder : "+ name);
         System.out.println("Account Number : "+accountNumber);
         System.out.println("Account Balance: "+accountBalance);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(int accountNumber) {
+        this.accountNumber = accountNumber;
     }
 }
 public class Practice {
