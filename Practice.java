@@ -1,3 +1,7 @@
+interface payment{
+    void pay(double amount);
+    void bal(double amount,double balance);
+}
 class Account{
     private String name;
     private int accountNumber;
@@ -42,9 +46,22 @@ class Account{
         this.accountNumber = accountNumber;
     }
 }
+class Mode implements payment{
+    @Override
+    public void pay(double amount){
+        System.out.println(amount+" is paid!");
+    }
+    @Override
+    public void bal(double amount,double balance){
+        System.out.println(balance - amount+" is refunded!");
+    }
+}
 public class Practice {
     public static void main(String[] args) {
         Account person = new Account("Santhosh",123);
+        Mode p1 = new Mode();
+        p1.pay(1000);
+        p1.bal(1000,2500.26);
         person.deposit(20000);
         person.withdraw(6000.56);
         person.getInfo();
