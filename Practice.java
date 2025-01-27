@@ -1,6 +1,7 @@
 interface payment{
     void pay(double amount);
     void bal(double amount,double balance);
+    void refund(double amount,double price);
 }
 class Account{
     private String name;
@@ -53,7 +54,11 @@ class Mode implements payment{
     }
     @Override
     public void bal(double amount,double balance){
-        System.out.println(balance - amount+" is refunded!");
+        System.out.println(balance - amount+" is balance!");
+    }
+    @Override
+    public void refund(double amount,double price){
+        System.out.println(amount - price+" is refunded!");
     }
 }
 public class Practice {
@@ -62,6 +67,7 @@ public class Practice {
         Mode p1 = new Mode();
         p1.pay(1000);
         p1.bal(1000,2500.26);
+        p1.refund(1000,900);
         person.deposit(20000);
         person.withdraw(6000.56);
         person.getInfo();
