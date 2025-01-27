@@ -1,13 +1,13 @@
 class Account{
     private String name;
     private int accountNumber;
-    private int accountBalance;
+    private double accountBalance;
     public Account(String currentName,int currentAccountNumber){
         this.name = currentName;
         this.accountNumber = currentAccountNumber;
         this.accountBalance = 0;
     }
-    public void withdraw(int amount){
+    public void withdraw(double amount){
         if(amount <= accountBalance){
             accountBalance = accountBalance - amount;
             System.out.println(accountBalance);
@@ -16,7 +16,7 @@ class Account{
             System.out.println("Insufficient Balance");
         }
     }
-    public void deposit(int amount){
+    public void deposit(double amount){
         accountBalance = accountBalance + amount;
         System.out.println(accountBalance);
     }
@@ -46,7 +46,7 @@ public class Practice {
     public static void main(String[] args) {
         Account person = new Account("Santhosh",123);
         person.deposit(20000);
-        person.withdraw(6000);
+        person.withdraw(6000.56);
         person.getInfo();
     }
 }
