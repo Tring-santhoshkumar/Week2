@@ -4,7 +4,7 @@ interface payment{
     void refund(double amount,double price);
 }
 abstract class Calc{
-    abstract double calcinterest();
+    abstract double calcinterest();                                    //Abstract Class
 }
 class Account{
     private String name;
@@ -64,21 +64,21 @@ class Mode implements payment{                                         //Class u
         System.out.println(amount - price+" is refunded!");
     }
 }
-class Interest extends Calc{                                           //Abstract Class Override
+class Interest extends Calc{                                           //Class using extends for creating a subClass
     public double amount;
     public double intPercent;
     public Interest(double currAmount,double currInterestPercent){
         this.amount = currAmount;
         this.intPercent = currInterestPercent;
     }
-    @Override
+    @Override                                                           //Abstract Class method Override
     double calcinterest(){
         return amount*(intPercent/100);
     }
 }
 public class Practice {                                                 //Main class
     public static void main(String[] args) {
-        Account person = new Account("Santhosh",123);
+        Account person = new Account("Santhosh Kumar",123);
         Mode p1 = new Mode();
         p1.pay(1000);
         p1.bal(1000,2500.26);
