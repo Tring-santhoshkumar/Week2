@@ -3,10 +3,10 @@ class InsufficientBalance extends Exception{
         super(msg);
     }
 }
-class Person{
+class Person1{
     public String name;
     public int balance;
-    public Person(String currName,int currBalance){
+    public Person1(String currName,int currBalance){
         this.name = currName;
         this.balance = currBalance;
     }
@@ -19,7 +19,7 @@ class Person{
 }
 public class Temp2 {
     public static void main(String[] args) {
-        Person newPerson = new Person("Santhosh",1000);
+        Person1 newPerson = new Person1("Santhosh",1000);
         try {
             newPerson.calc(10000);   
         } catch (InsufficientBalance e) {
