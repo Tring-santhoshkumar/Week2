@@ -21,7 +21,7 @@ public class Temp2 {
     public static void main(String[] args) {
         Person1 newPerson = new Person1("Santhosh",1000);
         try {
-            newPerson.calc(10000);   
+            newPerson.calc(1100);   
         } catch (InsufficientBalance e) {
             System.out.println(e.getMessage());
         }
