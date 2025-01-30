@@ -22,3 +22,7 @@ Node.class
 Queue.class
 QueueList.class
 Hashmap.class
+Book.class
+Room.class
+HotelBooking.class
+
