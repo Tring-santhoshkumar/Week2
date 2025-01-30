@@ -9,7 +9,7 @@ public class Stack{
             this.next = null;
         }
     }
-    public Node top;
+    Node top;
     public Stack(){
         top = null;
     }
@@ -56,6 +56,7 @@ public class Stack{
             int var = sc.nextInt();
             stackList.push(var);
         }
+        sc.close();
         stackList.print();
         stackList.pop();
         stackList.pop();
