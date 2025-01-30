@@ -1,15 +1,15 @@
 import java.util.Scanner;
-public class LinkedList{
-    Node head;
-    static class Node{
-        int data;
+class Node{
+    int data;
         Node next;
         Node(int x){
             this.data = x;
             this.next = null;
         }
-    }
-    public static LinkedList insert(LinkedList list,int x){
+}
+public class LinkedList{
+    Node head;
+    public LinkedList insert(LinkedList list,int x){
         Node newNode = new Node(x);
         if(list.head == null){
             list.head = newNode;
@@ -23,7 +23,7 @@ public class LinkedList{
         }
         return list;
     }
-    public static LinkedList reverse(LinkedList list){
+    public LinkedList reverse(LinkedList list){
         Node temp = list.head,prev = null,nextNode;
         while(temp != null){
             nextNode = temp.next;
@@ -34,7 +34,7 @@ public class LinkedList{
         list.head = prev;
         return list;
     }
-    public static void print(LinkedList list){
+    public void print(LinkedList list){
         Node temp = list.head;
         while(temp != null){
             System.out.print(temp.data+" ");
@@ -48,11 +48,11 @@ public class LinkedList{
         int N = sc.nextInt();
         for(int i=0;i<N;i++){
             int var = sc.nextInt();
-            list = insert(list,var);
+            list = list.insert(list,var);
         }
         sc.close();
-        print(list);
-        list = reverse(list);
-        print(list);
+        list.print(list);
+        list = list.reverse(list);
+        list.print(list);
     }
 }
