@@ -3,10 +3,10 @@ import java.util.Scanner;
 
 class Room {
 
-    public int roomNumber;
-    public String type;
-    public int price;
-    public boolean booked;
+    private int roomNumber;
+    private String type;
+    private int price;
+    private boolean booked;
 
     Room(int currRoomNumber, String currType, int currPrice) {
         this.roomNumber = currRoomNumber;
@@ -82,9 +82,15 @@ class Book {
             if (rooms[i].available() && rooms[i].roomNo() == roomNum && rooms[i].roomType().equals(type)) {
                 rooms[i].bookingRoom();
                 return;
+            } else if (rooms[i].available() && rooms[i].roomNo() == roomNum && !rooms[i].roomType().equals(type)) {
+                System.out.println("It's a " + rooms[i].roomType() + " Room,Check Availability.");
+                return;
+            } else if (totalRooms <= roomNum) {
+                System.out.println("Invalid Room Number,Check Availability.");
+                return;
             }
         }
-        System.out.println("Room Booked,Check Availability");
+        System.out.println("Room Booked,Check Availability.");
     }
 
     public void checkAvailability() {
@@ -105,14 +111,24 @@ class Book {
             if (!rooms[i].available() && rooms[i].roomNo() == roomNum) {
                 rooms[i].cancel();
                 return;
+            } else if (!rooms[i].available() && !(rooms[i].roomNo() == roomNum)) {
+                System.out.println("Room " + roomNum + " is not Booked.");
+                return;
             }
         }
-        System.out.println("No Room has been Booked.");
+        System.out.println("No Rooms are Booked.");
     }
 
     public void displayHotelRooms() {
+        int flag = 0;
         for (int i = 0; i < roomNumber; i++) {
-            rooms[i].display();
+            if (!rooms[i].available()) {
+                rooms[i].display();
+                flag = 1;
+            }
+        }
+        if (flag == 0) {
+            System.out.println("No Rooms are Booked.");
         }
     }
 
@@ -136,7 +152,9 @@ public class HotelBooking {
                     rooms.checkAvailability();
                     break;
                 case 2:
+                    System.out.print("Enter room No : ");
                     int roomNumber = sc.nextInt();
+                    System.out.print("Enter AC or Non-AC Type of room : ");
                     String typeofRoom = sc.next();
                     rooms.bookRoom(roomNumber, typeofRoom);
                     break;
@@ -144,6 +162,7 @@ public class HotelBooking {
                     rooms.displayHotelRooms();
                     break;
                 case 4:
+                    System.out.print("Enter room No : ");
                     int roomNumber2 = sc.nextInt();
                     rooms.cancelBooking(roomNumber2);
                     break;
