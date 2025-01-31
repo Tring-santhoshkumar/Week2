@@ -3,19 +3,19 @@ import java.util.Scanner;
 
 class Room {
 
-    private int roomNumber;
+    private int roomNumber;                                                       //Room class have all the required attributes
     private String type;
     private int price;
     private boolean booked;
 
-    Room(int currRoomNumber, String currType, int currPrice) {
+    Room(int currRoomNumber, String currType, int currPrice) {                    //Constructor used for encapsulation
         this.roomNumber = currRoomNumber;
         this.type = currType;
         this.price = currPrice;
         this.booked = false;
     }
 
-    public void bookingRoom() {
+    public void bookingRoom() {                                                    //Method for checking room available or not
         if (!booked) {
             booked = true;
             System.out.println(roomNumber + " Room has been booked Successfully!");
@@ -26,50 +26,50 @@ class Room {
 
     public void cancel() {
         if (booked) {
-            booked = false;
+            booked = false;                                                         //Method for cancelling the booked rooms
             System.out.println("Room " + roomNumber + " Booking has been cancelled.");
         } else {
             System.out.println("Room " + roomNumber + " is not booked.");
         }
     }
 
-    public void display() {
+    public void display() {                                                         //Method to display all the details
         String temp = (booked == true) ? "Booked" : "Available";
         System.out.println(roomNumber + " Room Number with " + type + " type of Ru." + price + " is " + temp);
     }
 
-    public boolean available() {
+    public boolean available() {                                                    //Check availability
         return (!booked) ? true : false;
     }
 
     public int roomNo() {
-        return roomNumber;
+        return roomNumber;                                                          //getter for private attributes
     }
 
     public String roomType() {
-        return type;
+        return type;                                                               //getter for private attributes
     }
 
 }
 
 class Book {
 
-    int totalRooms;
-    int roomNumber;
-    Room[] rooms;
+    int totalRooms;                                                     //Class Book for all the essential operations
+    int roomNumber;                                                       
+    Room[] rooms;                                                       //Declaring array of objects(Room)
 
     public Book(int X) {
-        rooms = new Room[X];
+        rooms = new Room[X];                                            //Initializing the array with size
         totalRooms = X;
-        roomNumber = 0;
+        roomNumber = 0;         
     }
 
-    public void add(int roomNum, String type, int price) {
+    public void add(int roomNum, String type, int price) {              //Method for adding rooms
         try {
             if (roomNumber < totalRooms) {
-                rooms[roomNumber++] = new Room(roomNum, type, price);
+                rooms[roomNumber++] = new Room(roomNum, type, price);   
             } else {
-                throw new Exception("Hotel has maximum rooms.");
+                throw new Exception("Hotel has maximum rooms.");    //Exception handling
             }
         } catch (Exception e) {
             System.err.println(e.getMessage());
@@ -77,7 +77,7 @@ class Book {
         }
     }
 
-    public void bookRoom(int roomNum, String type) {
+    public void bookRoom(int roomNum, String type) {                    //Method for booking rooms
         for (int i = 0; i < roomNumber; i++) {
             if (rooms[i].available() && rooms[i].roomNo() == roomNum && rooms[i].roomType().equals(type)) {
                 rooms[i].bookingRoom();
@@ -93,7 +93,7 @@ class Book {
         System.out.println("Room Booked,Check Availability.");
     }
 
-    public void checkAvailability() {
+    public void checkAvailability() {                                 //Method for checking Availability
         int flag = 0;
         for (int i = 0; i < roomNumber; i++) {
             if (rooms[i].available()) {
@@ -106,7 +106,7 @@ class Book {
         }
     }
 
-    public void cancelBooking(int roomNum) {
+    public void cancelBooking(int roomNum) {                        //Method for Cancel Booking 
         for (int i = 0; i < roomNumber; i++) {
             if (!rooms[i].available() && rooms[i].roomNo() == roomNum) {
                 rooms[i].cancel();
@@ -119,7 +119,7 @@ class Book {
         System.out.println("No Rooms are Booked.");
     }
 
-    public void displayHotelRooms() {
+    public void displayHotelRooms() {                               //Method for displaying the booked rooms
         int flag = 0;
         for (int i = 0; i < roomNumber; i++) {
             if (!rooms[i].available()) {
@@ -135,13 +135,13 @@ class Book {
 }
 
 public class HotelBooking {
-
+                                                                    //Main class 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         Book rooms = new Book(5);
         rooms.add(1, "AC", 1000);
         rooms.add(2, "AC", 1000);
-        rooms.add(3, "AC", 1000);
+        rooms.add(3, "AC", 1000);                //Adding rooms to hotel
         rooms.add(4, "Non-AC", 500);
         rooms.add(5, "Non-AC", 500);
         System.out.println("Welcome To Hotel Booking System!!!");
@@ -152,7 +152,7 @@ public class HotelBooking {
                     rooms.checkAvailability();
                     break;
                 case 2:
-                    System.out.print("Enter room No : ");
+                    System.out.print("Enter room No : ");          //User inputs handling
                     int roomNumber = sc.nextInt();
                     System.out.print("Enter AC or Non-AC Type of room : ");
                     String typeofRoom = sc.next();
