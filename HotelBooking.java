@@ -55,37 +55,37 @@ class Room {
 class Book {
 
     int totalRooms;                                                     //Class Book for all the essential operations
-    int roomNumber;                                                       
+    int roomNumber;
     Room[] rooms;                                                       //Declaring array of objects(Room)
 
     public Book(int X) {
         rooms = new Room[X];                                            //Initializing the array with size
         totalRooms = X;
-        roomNumber = 0;         
+        roomNumber = 0;
     }
 
     public void add(int roomNum, String type, int price) {              //Method for adding rooms
         try {
             if (roomNumber < totalRooms) {
-                rooms[roomNumber++] = new Room(roomNum, type, price);   
+                rooms[roomNumber++] = new Room(roomNum, type, price);
             } else {
-                throw new Exception("Hotel has maximum rooms.");    //Exception handling
+                throw new Exception("Hotel has rooms to be added.Give Minimum Size of Rooms to be added.");    //Exception handling
             }
         } catch (Exception e) {
             System.err.println(e.getMessage());
-
+            System.exit(0);
         }
     }
 
     public void bookRoom(int roomNum, String type) {                    //Method for booking rooms
         for (int i = 0; i < roomNumber; i++) {
-            if (rooms[i].available() && rooms[i].roomNo() == roomNum && rooms[i].roomType().equals(type)) {
+            if (rooms[i].available() && rooms[i].roomNo() == roomNum && rooms[i].roomType().equalsIgnoreCase(type)) {
                 rooms[i].bookingRoom();
                 return;
-            } else if (rooms[i].available() && rooms[i].roomNo() == roomNum && !rooms[i].roomType().equals(type)) {
+            } else if (rooms[i].available() && rooms[i].roomNo() == roomNum && !(rooms[i].roomType().equalsIgnoreCase(type))) {
                 System.out.println("It's a " + rooms[i].roomType() + " Room,Check Availability.");
                 return;
-            } else if (totalRooms <= roomNum) {
+            } else if (totalRooms < roomNum) {
                 System.out.println("Invalid Room Number,Check Availability.");
                 return;
             }
@@ -108,15 +108,23 @@ class Book {
 
     public void cancelBooking(int roomNum) {                        //Method for Cancel Booking 
         for (int i = 0; i < roomNumber; i++) {
-            if (!rooms[i].available() && rooms[i].roomNo() == roomNum) {
-                rooms[i].cancel();
-                return;
-            } else if (!rooms[i].available() && !(rooms[i].roomNo() == roomNum)) {
-                System.out.println("Room " + roomNum + " is not Booked.");
-                return;
+            if (rooms[i].roomNo() == roomNum) {
+                if (!rooms[i].available()) {
+                    rooms[i].cancel();
+                    return;
+                } else {
+                    System.out.println("Room " + roomNum + " is not Booked...");
+                    return;
+                }
             }
         }
-        System.out.println("No Rooms are Booked.");
+        try {
+            if (roomNum > roomNumber) {
+                throw new Exception("No such Room is present.");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void displayHotelRooms() {                               //Method for displaying the booked rooms
@@ -135,10 +143,13 @@ class Book {
 }
 
 public class HotelBooking {
-                                                                    //Main class 
+    //Main class 
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        Book rooms = new Book(5);
+        System.out.println("Give Total rooms to be added : ");
+        int totalSize = sc.nextInt();
+        Book rooms = new Book(totalSize);
         rooms.add(1, "AC", 1000);
         rooms.add(2, "AC", 1000);
         rooms.add(3, "AC", 1000);                //Adding rooms to hotel
@@ -152,9 +163,9 @@ public class HotelBooking {
                     rooms.checkAvailability();
                     break;
                 case 2:
-                    System.out.print("Enter room No : ");          //User inputs handling
+                    System.out.print("Enter room No 1 to " + totalSize + " : ");          //User inputs handling
                     int roomNumber = sc.nextInt();
-                    System.out.print("Enter AC or Non-AC Type of room : ");
+                    System.out.print("Enter AC or Non-AC for Type of room : ");
                     String typeofRoom = sc.next();
                     rooms.bookRoom(roomNumber, typeofRoom);
                     break;
