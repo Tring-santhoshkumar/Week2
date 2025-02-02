@@ -113,7 +113,7 @@ class Book {
                     roomBooked--;
                     return;
                 } else {
-                    System.out.println("Room " + roomNum + " is not Booked...");
+                    System.out.println("Room " + roomNum + " is not Booked.");
                     return;
                 }
             }
@@ -150,7 +150,7 @@ enum ChooseOption {                                         //Using enum instead
     },
     bookRoomOption(2) {
         void action(Scanner sc, Book rooms) {
-            System.out.print("Enter room No 1 to 3 for AC and 4 to 5 for Non-Ac : ");
+            System.out.print("Enter room Number -> 1 to 3 for AC And 4 to 5 for Non-Ac : ");
             int roomNumber = sc.nextInt();
             rooms.bookRoom(roomNumber);
         }
@@ -165,7 +165,7 @@ enum ChooseOption {                                         //Using enum instead
             if (rooms.roomBooked == 0) {
                 System.out.println("No Rooms are Booked,Please first Book Room.");
             } else {
-                System.out.print("Enter room No : ");
+                System.out.print("Enter room Number to be cancelled: ");
                 int roomNumber2 = sc.nextInt();
                 rooms.cancelBooking(roomNumber2);
             }
@@ -177,7 +177,8 @@ enum ChooseOption {                                         //Using enum instead
             System.exit(0);
         }
     };
-    public int option;
+    
+    public int option;                                             
 
     ChooseOption(int val) {
         this.option = val;
@@ -212,7 +213,6 @@ public class HotelBooking {                                          //Main clas
             System.out.println("Type\n1 - Check Availability\n2 - Book a Room\n3 - Display Booking Details\n4 - Cancel Booking\n5 - Exit");
             try {
                 int option = sc.nextInt();
-                
                 ChooseOption select = ChooseOption.choice(option);
                 select.action(sc, rooms);                                    //Exception Handling
             } catch (Exception e) {
