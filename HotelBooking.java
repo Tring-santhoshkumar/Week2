@@ -8,7 +8,7 @@ class Room {
     private int price;
     private boolean booked;
 
-    Room(int currRoomNumber, String currType, int currPrice) {                    //Constructor used for encapsulation
+    Room(int currRoomNumber, String currType, int currPrice) {                    //Constructor used for initializing(Encapsulation)
         this.roomNumber = currRoomNumber;
         this.type = currType;
         this.price = currPrice;
@@ -44,7 +44,7 @@ class Room {
 
     public int roomNo() {
         return roomNumber;                                                          //getter for private attributes
-    }
+    }                                                                                               //encapsulation
 
     public String roomType() {
         return type;                                                               //getter for private attributes
@@ -57,6 +57,7 @@ class Book {
     int totalRooms;                                                     //Class Book for all the essential operations
     int roomNumber;
     Room[] rooms;                                                       //Declaring array of objects(Room)
+    int roomBooked = 0;
 
     public Book(int X) {
         rooms = new Room[X];                                            //Initializing the array with size
@@ -77,15 +78,13 @@ class Book {
         }
     }
 
-    public void bookRoom(int roomNum, String type) {                    //Method for booking rooms
+    public void bookRoom(int roomNum) {                    //Method for booking rooms
         for (int i = 0; i < roomNumber; i++) {
-            if (rooms[i].available() && rooms[i].roomNo() == roomNum && rooms[i].roomType().equalsIgnoreCase(type)) {
+            if (rooms[i].available() && rooms[i].roomNo() == roomNum) {
                 rooms[i].bookingRoom();
+                roomBooked++;
                 return;
-            } else if (rooms[i].available() && rooms[i].roomNo() == roomNum && !(rooms[i].roomType().equalsIgnoreCase(type))) {
-                System.out.println("It's a " + rooms[i].roomType() + " Room,Check Availability.");
-                return;
-            } else if (totalRooms < roomNum) {
+            } else if (totalRooms < roomNum || roomNum > roomNumber) {
                 System.out.println("Invalid Room Number,Check Availability.");
                 return;
             }
@@ -111,9 +110,10 @@ class Book {
             if (rooms[i].roomNo() == roomNum) {
                 if (!rooms[i].available()) {
                     rooms[i].cancel();
+                    roomBooked--;
                     return;
                 } else {
-                    System.out.println("Room " + roomNum + " is not Booked...");
+                    System.out.println("Room " + roomNum + " is not Booked.");
                     return;
                 }
             }
@@ -142,8 +142,61 @@ class Book {
 
 }
 
-public class HotelBooking {
-    //Main class 
+enum ChooseOption {                                         //Using enum instead of Switch case
+    checkAvailabilityOption(1) {
+        void action(Scanner sc, Book rooms) {                           //User Choices
+            rooms.checkAvailability();
+        }
+    },
+    bookRoomOption(2) {
+        void action(Scanner sc, Book rooms) {
+            System.out.print("Enter room Number -> 1 to 3 for AC And 4 to 5 for Non-Ac : ");
+            int roomNumber = sc.nextInt();
+            rooms.bookRoom(roomNumber);
+        }
+    },
+    displayBookingDetailsOption(3) {
+        void action(Scanner sc, Book rooms) {
+            rooms.displayHotelRooms();
+        }
+    },
+    cancelBookingOption(4) {
+        void action(Scanner sc, Book rooms) {
+            if (rooms.roomBooked == 0) {
+                System.out.println("No Rooms are Booked,Please first Book Room.");
+            } else {
+                System.out.print("Enter room Number to be cancelled: ");
+                int roomNumber2 = sc.nextInt();
+                rooms.cancelBooking(roomNumber2);
+            }
+        }
+    },
+    exitOption(5) {
+        void action(Scanner sc, Book rooms) {
+            System.out.println("Thankyou for Using Hotel Booking System!");
+            System.exit(0);
+        }
+    };
+    
+    public int option;                                             
+
+    ChooseOption(int val) {
+        this.option = val;
+    }
+
+    public static ChooseOption choice(int choiceOfUser) {
+        for (ChooseOption i : values()) {
+            if (i.option == choiceOfUser) {
+                return i;
+            }
+        }
+        throw new IllegalArgumentException("Invalid Options,Please Choose valid options!!!");
+    }
+
+    abstract void action(Scanner sc, Book rooms);                    //abstract method
+}
+
+public class HotelBooking {                                          //Main class 
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -158,31 +211,12 @@ public class HotelBooking {
         System.out.println("Welcome To Hotel Booking System!!!");
         while (true) {
             System.out.println("Type\n1 - Check Availability\n2 - Book a Room\n3 - Display Booking Details\n4 - Cancel Booking\n5 - Exit");
-            switch (sc.nextInt()) {
-                case 1:
-                    rooms.checkAvailability();
-                    break;
-                case 2:
-                    System.out.print("Enter room No 1 to " + totalSize + " : ");          //User inputs handling
-                    int roomNumber = sc.nextInt();
-                    System.out.print("Enter AC or Non-AC for Type of room : ");
-                    String typeofRoom = sc.next();
-                    rooms.bookRoom(roomNumber, typeofRoom);
-                    break;
-                case 3:
-                    rooms.displayHotelRooms();
-                    break;
-                case 4:
-                    System.out.print("Enter room No : ");
-                    int roomNumber2 = sc.nextInt();
-                    rooms.cancelBooking(roomNumber2);
-                    break;
-                case 5:
-                    System.out.println("Thankyou for Using Hotel Booking System!");
-                    return;
-                default:
-                    System.out.println("Enter Options : ");
-
+            try {
+                int option = sc.nextInt();
+                ChooseOption select = ChooseOption.choice(option);
+                select.action(sc, rooms);                                    //Exception Handling
+            } catch (Exception e) {
+                System.out.println("Invalid Options,Please Choose valid options!");
             }
         }
     }
