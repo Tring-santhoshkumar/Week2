@@ -200,9 +200,7 @@ public class HotelBooking {                                          //Main clas
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Give Total rooms to be added : ");
-        int totalSize = sc.nextInt();
-        Book rooms = new Book(totalSize);
+        Book rooms = new Book(5);
         rooms.add(1, "AC", 1000);
         rooms.add(2, "AC", 1000);
         rooms.add(3, "AC", 1000);                //Adding rooms to hotel
@@ -211,12 +209,21 @@ public class HotelBooking {                                          //Main clas
         System.out.println("Welcome To Hotel Booking System!!!");
         while (true) {
             System.out.println("Type\n1 - Check Availability\n2 - Book a Room\n3 - Display Booking Details\n4 - Cancel Booking\n5 - Exit");
-            try {
-                int option = sc.nextInt();
-                ChooseOption select = ChooseOption.choice(option);
-                select.action(sc, rooms);                                    //Exception Handling
-            } catch (Exception e) {
-                System.out.println("Invalid Options,Please Choose valid options!");
+            int option = validInput(sc,"Enter Options : ");
+            ChooseOption select = ChooseOption.choice(option);
+            if(select != null){
+                select.action(sc,rooms);
+            }
+        }
+    }
+    public static int validInput(Scanner sc,String prompt){
+        while(true){
+            System.out.println(prompt);
+            try{
+                return sc.nextInt();                                                        //Exception Handling
+            }catch(Exception e){
+                System.out.println("Invalid Input,Please Choose Valid Options.");
+                sc.nextLine();
             }
         }
     }
