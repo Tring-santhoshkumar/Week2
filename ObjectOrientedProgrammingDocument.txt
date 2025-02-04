@@ -1,0 +1,110 @@
+				     OOPS CONCEPT
+
+Object Oriented Programming aims to implement real-world entities like Abstraction, Encapsulation, Inheritance, Polymorphism.
+
+Class : It’s a user defined blue print from which objects are created. It consists of common attributes, properties, functions, etc. for every objects which are common to it.
+Objects : It’s a real-world entity, where they are created using class in which they invoke functions, properties of it.
+Example :  A car is  class which consists of attributes like wheels, seats, steering, etc.
+                        Benz, BMW, Lambo, etc. are the objects of class car.
+
+
+Encapsulation :
+	It’s the wrapping of data and methods(Functions) in a single unit(Class),where it prevents the code being accessed by outside the unit.
+	It can be achieved by using private(Modifiers) attributes, which cannot be accessed by outside class.
+	To access these attributes, use public methods in the  class to get and set the  values of these attributes.
+
+	Example :
+		Class Main{
+			private String name;
+			public String getName(){
+				return name;
+			}
+			public void setName(String a){
+				this.name = a;
+			} 
+                                           }
+
+
+Abstraction :
+	It’s the concept of showing only the essentials to the outside world, where only the required ones are shown to the user rather than the functions, details , etc. are hidden.
+	Abstraction is achieved by Abstract classes (using the keyword abstract and extends for the subclass which is derived from abstract class) and Interface (using the keyword interface and implements for the subclass which is derived from interface).
+
+	Example :
+		abstract class Name{
+			public void printName();
+		} 
+		Class Main extends Name{
+			@Override
+			Void printName(){
+				System.out.println(“I am Santhosh!”);
+			}
+		} 
+
+
+
+Inheritance :
+	It’s the concept of inheriting properties, functions, etc.  from another class by using extends keyword.
+	Superclass or Parent class is the class whose features are inherited.
+	Subclass or Child class is the class which inherits from the super class.
+	5 different types - > Single Inheritance, Multi level  Inheritance, Multiple Inheritance, Hybrid Inheritance, Hierarchical Inheritance.
+	
+	Example :
+		Single Inheritance – 
+		Class Main{
+			public void print(){
+				System.out.println(“From Superclass”);
+			}
+		}
+		Class Second extends Main{
+			public void printSub(){
+				System.out.println(“From Subclass”);
+			}
+		}
+		
+		Multilevel Inheritance – 
+		Class Main{
+			public void print(){
+				System.out.println(“From Superclass”);
+			}
+		}
+		Class Second extends Main{
+			public void printSub1(){
+				System.out.println(“From Subclass1”);
+			}
+		}
+		Class Third extends Second{
+			public void printSub2(){
+				System.out.println(“From Subclass2”);
+			}
+		}
+
+
+Polymorphism :
+	It’s the concept of referring to multiple property(more than one form).
+	Two types - > Compile time polymorphism and Run time polymorphism.
+	Compile time polymorphism(Method Overloading), multiple functions with same name but with different parameters, or with difference in number of arguments.
+	Run time polymorphism(Method Overriding), when a subclass implements a method which is already defined in a superclass. In which the actual method executed is determined by the object’s runtime type.
+	
+	Example : 
+		Compile time polymorphism –
+		Class Main{
+			public int print(int a,int b){
+				return a+b;
+			}
+			public float print(float a,float b){
+				return a+b;
+			}
+		}
+
+
+		Run time polymorphism -  
+			Class Main{
+			public void print(){
+				System.out.println(“From Superclass”);
+			}
+		}
+			Class Second extend Main{
+			public void print(){
+				System.out.println(“From Subclass”);
+			}
+		}
